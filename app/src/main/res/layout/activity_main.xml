@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+
+    <TextView
+        android:id="@+id/numberContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/secondGrid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <GridLayout
+        android:id="@+id/secondGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="5"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/gridCalc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <Button
+            android:id="@+id/buttonMC"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+
+            android:text="MC"
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/buttonMR"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:text="MR"
+
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/buttonMPlus"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:text="M+"
+
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/buttonMLess"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:text="M-"
+
+            app:cornerRadius="0dp" />
+
+        <Button
+            android:id="@+id/buttonMS"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:text="MS"
+
+            app:cornerRadius="0dp" />
+
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/gridCalc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="4"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.636">
+
+        <Button
+            android:id="@+id/division"
+            android:layout_column="3"
+            android:text="/" />
+
+        <Button
+            android:id="@+id/bº1"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/b2"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/b3"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/multiplication"
+            android:text="*" />
+
+        <Button
+            android:id="@+id/b4"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/b5"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/b6"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/resta"
+            android:text="-" />
+
+        <Button
+            android:id="@+id/b7"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/b8"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/b9"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/suma"
+            android:layout_rowSpan="3"
+            android:layout_gravity="fill"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/b0"
+            android:layout_columnSpan="2"
+            android:layout_gravity="fill"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/b00"
+            android:text="00" />
+
+        <Button
+            android:id="@+id/equals"
+            android:layout_columnSpan="3"
+            android:layout_gravity="fill"
+            android:text="=" />
+
+    </GridLayout>
+
+    <!-- Segundo GridLayout vacío -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
