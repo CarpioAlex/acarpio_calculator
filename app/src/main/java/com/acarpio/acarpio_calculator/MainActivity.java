@@ -4,24 +4,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.acarpio.acarpio_calculator.databinding.ActivityMainBinding;
 
+
 public class MainActivity extends AppCompatActivity {
 
     public static StringBuilder input;
-    String operator;
-    Double result;
-
-    boolean numberInMemory;
-    double memoryValue;
-
-
 
 
 
@@ -46,10 +42,9 @@ public class MainActivity extends AppCompatActivity {
         assignListeners(binding, listener);
 
         input = new StringBuilder();
-        operator = "";
-        result = 0.0;
-        numberInMemory = false;
-        memoryValue = 0.0;
+
+
+
 
     }
 
@@ -58,9 +53,23 @@ public class MainActivity extends AppCompatActivity {
             View child = binding.gridCalc.getChildAt(i);
             if (child instanceof Button) {
                 child.setOnClickListener(listener);
+                child.setBackground(AppCompatResources.getDrawable(this, R.drawable.selector_boton));
             }
         }
+        for (int i = 0; i < binding.secondGrid.getChildCount(); i++) {
+            View child = binding.secondGrid.getChildAt(i);
+            if (child instanceof Button) {
+                child.setOnClickListener(listener);
+                child.setBackground(AppCompatResources.getDrawable(this, R.drawable.selector_boton));
+            }
+        }
+
+        binding.currentHistory.setOnClickListener(listener);
+
     }
+
+
+
 
     public static StringBuilder getCurrentInput() {
         return MainActivity.input;
