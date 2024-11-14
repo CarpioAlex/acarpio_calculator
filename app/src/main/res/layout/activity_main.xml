@@ -12,8 +12,8 @@
 
     <TextView
         android:id="@+id/numberContainer"
-        android:layout_width="314dp"
-        android:layout_height="71dp"
+        android:layout_width="362dp"
+        android:layout_height="69dp"
         android:layout_margin="16dp"
         android:background="@drawable/gradiente_display"
         android:ellipsize="end"
@@ -46,8 +46,8 @@
 
     <GridLayout
         android:id="@+id/gridCalc"
-        android:layout_width="278dp"
-        android:layout_height="404dp"
+        android:layout_width="359dp"
+        android:layout_height="499dp"
         android:layout_gravity="center"
         android:columnCount="4"
         android:orientation="horizontal"
@@ -57,7 +57,7 @@
         app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498">
+        app:layout_constraintVertical_bias="0.65">
 
         <Button
             android:id="@+id/division"
@@ -200,8 +200,8 @@
 
     <GridLayout
         android:id="@+id/secondGrid"
-        android:layout_width="330dp"
-        android:layout_height="41dp"
+        android:layout_width="319dp"
+        android:layout_height="43dp"
         android:columnCount="7"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/gridCalc"
@@ -225,6 +225,7 @@
             android:layout_width="45dp"
             android:layout_height="wrap_content"
 
+            android:enabled="false"
             android:text="MC"
             android:textSize="12sp"
             app:cornerRadius="0dp" />
@@ -233,8 +234,9 @@
             android:id="@+id/buttonMR"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:text="MR"
+            android:enabled="false"
 
+            android:text="MR"
             android:textSize="12sp"
             app:cornerRadius="0dp" />
 
@@ -242,8 +244,9 @@
             android:id="@+id/buttonMPlus"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:text="M+"
+            android:enabled="false"
 
+            android:text="M+"
             android:textSize="12sp"
             app:cornerRadius="0dp" />
 
@@ -251,8 +254,9 @@
             android:id="@+id/buttonMLess"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:text="M-"
+            android:enabled="false"
 
+            android:text="M-"
             android:textSize="12sp"
             app:cornerRadius="0dp" />
 
@@ -299,6 +303,18 @@
             android:textSize="16sp"
             android:textStyle="bold" />
     </ScrollView>
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="123dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+        android:text="Ugly mode"
+        android:textColor="@color/accent_yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridCalc"
+        app:layout_constraintVertical_bias="0.584" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

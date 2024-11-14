@@ -11,6 +11,18 @@
 
     <!-- Contenedor del Display de Número -->
 
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="123dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="308dp"
+        android:text="Ugly mode"
+        android:textColor="@color/accent_yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gridCalc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/historyContainer" />
+
     <ScrollView
         android:id="@+id/historyContainer"
         android:layout_width="367dp"
@@ -26,7 +38,6 @@
             android:id="@+id/historyText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:textAlignment="center"
             android:textColor="@color/display_text"
             android:textSize="16sp"

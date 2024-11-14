@@ -1,7 +1,7 @@
 package com.acarpio.acarpio_calculator;
 
 import android.view.View;
-import android.widget.Button;
+import android.util.Log;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -9,7 +9,7 @@ import com.acarpio.acarpio_calculator.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
-public class CalculatorListener implements View.OnClickListener {
+public class CalculatorListener implements View.OnClickListener, View.OnLayoutChangeListener {
 
     private ActivityMainBinding binding;
     private TextView numberContainer;
@@ -35,17 +35,23 @@ public class CalculatorListener implements View.OnClickListener {
         this.currentHistory = binding.currentHistory;
         this.historyContainer = binding.historyContainer;
         this.historyText = binding.historyText;
+        this.memory = 0;
+        binding.getRoot().addOnLayoutChangeListener(this);
+        this.binding = binding;
+        this.input = MainActivity.getCurrentInput();
+        this.numberContainer = binding.numberContainer;
+        this.currentHistory = binding.currentHistory;
+        this.historyContainer = binding.historyContainer;
+        this.historyText = binding.historyText;
+        this.memory = 0;
     }
-
 
     @Override
     public void onClick(View v) {
         input = MainActivity.getCurrentInput();
 
-
         if (isNewInput) {
             input.setLength(0);
-
             isNewInput = false;
         }
 
@@ -91,17 +97,27 @@ public class CalculatorListener implements View.OnClickListener {
             updateInput();
         } else if (v == binding.buttonMS) {
             saveMemory();
+            isNewInput = true;
         } else if (v == binding.buttonMR) {
-            if (memory != 0) {
-                input.append(memory);
-                updateInput();
-            }
+            input.setLength(0);
+            input.append(formatValue(memory));
+            updateInput();
+            operand1 = memory;
+            operator = "";
+            isNewInput = false;
         } else if (v == binding.buttonMPlus) {
             addMemory();
+            isNewInput = true;
         } else if (v == binding.buttonMLess) {
             restarMemory();
+            isNewInput = true;
         } else if (v == binding.buttonMC) {
-            memory = 0;
+            clearMemory();
+            binding.buttonMR.setEnabled(false);
+            binding.buttonMLess.setEnabled(false);
+            binding.buttonMPlus.setEnabled(false);
+            binding.buttonMC.setEnabled(false);
+            isNewInput = true;
         } else if (v == binding.currentHistory) {
             if (!historyOpened) {
                 historyContainer.setVisibility(View.VISIBLE);
@@ -110,16 +126,18 @@ public class CalculatorListener implements View.OnClickListener {
                 historyContainer.setVisibility(View.GONE);
                 historyOpened = false;
             }
-
         }
 
         updateInput();
     }
 
     public void updateInput() {
-        binding.numberContainer.setText(input.toString());
+        if (input.length() > 0) {
+            binding.numberContainer.setText(formatValue(Double.parseDouble(input.toString())));
+        } else {
+            binding.numberContainer.setText("");
+        }
         binding.currentHistory.setText(history.toString());
-
     }
 
     public void resetHistory() {
@@ -128,9 +146,8 @@ public class CalculatorListener implements View.OnClickListener {
     }
 
     public void setOperator(String op) {
-        if (input.length() > 0) {
+        if (input.length() > 0 || !operator.isEmpty()) {
             if (!operator.isEmpty()) {
-
                 setResult();
             }
 
@@ -138,9 +155,13 @@ public class CalculatorListener implements View.OnClickListener {
                 resetHistory();
             }
 
-            operand1 = Double.parseDouble(input.toString());
+            operand1 = input.length() > 0 ? Double.parseDouble(input.toString()) : 0;
+            input.setLength(0);
+            input.append(formatValue(operand1));
+            isNewInput = false;
+
             operator = op;
-            history.append(operand1).append(" ").append(operator).append(" ");
+            history.append(formatValue(operand1)).append(" ").append(operator).append(" ");
             updateInput();
             input.setLength(0);
             isNewInput = true;
@@ -148,8 +169,8 @@ public class CalculatorListener implements View.OnClickListener {
     }
 
     public void setResult() {
-        if (input.length() > 0 && !operator.isEmpty()) {
-            operand2 = Double.parseDouble(input.toString());
+        if (input.length() > 0 || !operator.isEmpty()) {
+            operand2 = input.length() > 0 ? Double.parseDouble(input.toString()) : 0;
             double result;
 
             switch (operator) {
@@ -173,65 +194,101 @@ public class CalculatorListener implements View.OnClickListener {
                 default:
                     return;
             }
-            String resultString = operand1 + " " + operator + " " + operand2 + " = " + result;
-            history.append(operand2).append(" = ").append(result);
-            historyList.add(new StringBuilder(resultString));
-            input.setLength(0);
-            input.append(result);
-            operand1 = result;
 
+            input.setLength(0);
+            input.append(formatValue(result));
+
+            String resultString = formatValue(operand1) + " " + operator + " " + formatValue(operand2) + " = " + formatValue(result);
+            history.append(formatValue(operand2)).append(" = ").append(formatValue(result));
+            historyList.add(new StringBuilder(resultString));
+            operand1 = result;
+            operator = "";
+            isNewInput = false;
+            input.setLength(0);
+            input.append(formatValue(result));
 
             updateInput();
             operator = "";
-            isNewInput = true;
+            isNewInput = false;
 
             if (historyOpened) {
                 populateHistory();
             }
-
         }
     }
 
     // Memory
 
     public void saveMemory() {
-        if (input.length() > 0) {
-            memory = Double.parseDouble(input.toString());
+        if (input != null && input.length() > 0) {
+            if (input != null && input.length() > 0) {
+                memory = Double.parseDouble(input.toString());
+            }
+            updateMemoryButtons();
         }
     }
 
     public void addMemory() {
         if (input.length() > 0) {
             memory += Double.parseDouble(input.toString());
+            updateMemoryButtons();
         }
-
     }
 
     public void restarMemory() {
         if (input.length() > 0) {
             memory -= Double.parseDouble(input.toString());
+            updateMemoryButtons();
         }
     }
 
+    public void clearMemory() {
+        memory = 0;
+        updateMemoryButtons();
+        memory = 0;
+        updateMemoryButtons();
+    }
+
+    public ArrayList<StringBuilder> getHistoryList() {
+        return historyList;
+    }
+
+    private void updateMemoryButtons() {
+        boolean memoryNotEmpty = memory != 0;
+        binding.buttonMR.setEnabled(memoryNotEmpty);
+        binding.buttonMLess.setEnabled(memoryNotEmpty);
+        binding.buttonMPlus.setEnabled(memoryNotEmpty);
+        binding.buttonMC.setEnabled(memoryNotEmpty);
+    }
 
     // History
 
     public void populateHistory() {
-
-
-
         historyOpened = true;
         historyText.setText("");
-
-
+        StringBuilder completeHistory = new StringBuilder();
         for (StringBuilder hist : historyList) {
-            historyText.append(hist.toString() + "\n");
+            completeHistory.append(hist.toString()).append("\n");
         }
-
+        historyText.setText(completeHistory.toString());
 
         historyContainer.post(() -> historyContainer.fullScroll(View.FOCUS_DOWN));
     }
 
+    // Extras
 
+    public boolean entero(Double n) {
+        Log.d("entero", n.toString());
+        return n % 1 == 0;
+    }
 
+    private String formatValue(double value) {
+        return (value % 1 == 0) ? String.format("%.0f", value) : String.valueOf(value);
+    }
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        if (v == binding.getRoot()) {
+            saveMemory();
+        }
+    }
 }
