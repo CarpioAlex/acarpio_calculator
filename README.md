@@ -1,7 +1,10 @@
 # acarpio calculator
 
 **Video:**
-https://github.com/user-attachments/assets/5ab6a2c5-91b4-4e6a-be71-a3b834a78324
+
+     
+
+<video src="https://github.com/user-attachments/assets/a14346d8-6564-46e6-b11d-08b160d4805c" controls width="600"></video>
 
 
 
